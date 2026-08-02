@@ -2,7 +2,7 @@
 
 Software engineer across the stack — **AI engineering, full-stack product, and the infrastructure underneath**. When a tool I use breaks, I root-cause it and upstream the fix: **31 merged PRs** in some of the most-used open-source projects in the world. Race conditions, memory leaks, gradient math, UI edge cases — every claim below is one click from the diff.
 
-**Open to full-stack / AI / backend roles** · United States · open to relocation · 📫 goingforstudying@gmail.com
+📫 goingforstudying@gmail.com
 
 ---
 
@@ -39,6 +39,5 @@ Software engineer across the stack — **AI engineering, full-stack product, and
 
 ---
 
-**Now:** contributing to astronomer-cosmos (dbt × Airflow) — latest PR opened Aug 1, 2026.
 
 *Full list: [all merged PRs →](https://github.com/search?q=author%3Agoingforstudying-ctrl+is%3Apr+is%3Amerged&type=pullrequests&s=created&o=desc)*
