@@ -1,4 +1,7 @@
-# The test was protecting the bug.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/goingforstudying-ctrl/goingforstudying-ctrl/main/assets/cover-dark.svg">
+  <img src="https://raw.githubusercontent.com/goingforstudying-ctrl/goingforstudying-ctrl/main/assets/cover-light.svg" alt="The test was protecting the bug. Field notes on MLE and AI Engineering." width="1200">
+</picture>
 
 TensorFlow's `xlogy` returned the right value at `x = 0` and the wrong gradient. The existing test expected that wrong answer. My fix changed the derivative and the test that had kept it looking correct. [Read the story](https://goingforstudying-ctrl.github.io/notes/tensorflow-zero-gradient/) · [Merged patch](https://github.com/tensorflow/tensorflow/pull/119869)
 
