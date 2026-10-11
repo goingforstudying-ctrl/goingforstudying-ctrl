@@ -1,43 +1,44 @@
-# My code ships in VS Code, TensorFlow, and Apache Airflow
+# AI infrastructure & distributed systems
 
-Software engineer across the stack — **AI engineering, full-stack product, and the infrastructure underneath**. When a tool I use breaks, I root-cause it and upstream the fix: **31 merged PRs** in some of the most-used open-source projects in the world. Race conditions, memory leaks, gradient math, UI edge cases — every claim below is one click from the diff.
+I work on the boundaries where systems fail: concurrent access, resource lifetimes, task state transitions, and numerical edge cases. My open-source work spans **model code, backend services, and developer tools**.
 
-📫 goingforstudying@gmail.com
+**47 merged public PRs across 28 repositories** · [Browse the contributions](https://github.com/search?q=author%3Agoingforstudying-ctrl+is%3Apr+is%3Amerged+is%3Apublic&type=pullrequests&s=updated&o=desc)
 
----
+[Engineering notes](https://goingforstudying-ctrl.github.io/) · [How I approach a fix](#how-i-approach-a-fix) · [More merged work](#more-merged-work)
 
-### 🤖 AI engineering
+## Selected contributions
 
-| Project | PR | What it fixes |
-|---|---|---|
-| tensorflow/tensorflow | [#119869](https://github.com/tensorflow/tensorflow/pull/119869) | Wrong `xlogy` / `xlog1py` gradient w.r.t. `x` at `x = 0` |
-| apache/superset | [#40746](https://github.com/apache/superset/pull/40746) | **MCP** tools crashing on `Role` ORM objects — Pydantic validation fix |
-| Significant-Gravitas/AutoGPT | [#12540](https://github.com/Significant-Gravitas/AutoGPT/pull/12540) | `IndexError` guard for empty `choices` in LLM provider responses |
-| langgenius/dify | [#36903](https://github.com/langgenius/dify/pull/36903) | `idle-in-transaction` from long-lived DB sessions in tool icon lookups |
-| ogx-ai/ogx | [#6072](https://github.com/ogx-ai/ogx/pull/6072) | `RuntimeError: Event loop is closed` on first VertexAI inference after startup |
+| Project | Problem → merged fix |
+| :--- | :--- |
+| **TensorFlow** | Corrected the `xlogy` / `xlog1py` gradient at `x = 0`. [#119869](https://github.com/tensorflow/tensorflow/pull/119869) |
+| **Celery** | Serialized shared Redis pub/sub access across result polling and cleanup. [#10671](https://github.com/celery/celery/pull/10671) |
+| **Apache Airflow** | Prevented a delayed executor event from failing a task already re-queued after deferral. [#68741](https://github.com/apache/airflow/pull/68741) |
+| **Apache Superset** | Isolated database sessions for concurrent MCP tool calls. [#42629](https://github.com/apache/superset/pull/42629) |
+| **Swiftide** | Deferred cache writes until nodes reach the end of the indexing pipeline. [#1164](https://github.com/bosun-ai/swiftide/pull/1164) |
+| **rqlite** | Preserved snapshot ordering when the system clock moves backwards. [#2812](https://github.com/rqlite/rqlite/pull/2812) |
+| **aiohttp** | Fixed a connector shutdown race with pending DNS resolutions. [#12787](https://github.com/aio-libs/aiohttp/pull/12787) |
 
-### 🧰 Full-stack & product
+## From the patch to the reasoning
 
-| Project | PR | What it fixes |
-|---|---|---|
-| microsoft/vscode | [#318935](https://github.com/microsoft/vscode/pull/318935) | Toolbar layout breakage in CJK locales |
-| denoland/deno | [#34410](https://github.com/denoland/deno/pull/34410) | LSP — remove a panic path in `PerformanceScopeMark` drop |
-| usememos/memos | [#6000](https://github.com/usememos/memos/pull/6000) | Link previews silently dropped standard `<meta name=description>` |
-| Y2Z/monolith | [#492](https://github.com/Y2Z/monolith/pull/492) | Send all matching cookies, not just the last one |
+- [**A zero forward value can still have a nonzero gradient**](https://goingforstudying-ctrl.github.io/notes/tensorflow-zero-gradient/) — the distinction behind a TensorFlow math fix.
+- [**A cleanup path is still a concurrent caller**](https://goingforstudying-ctrl.github.io/notes/celery-pubsub-concurrency/) — shared sockets, reentrant locks, and the cost of serialization.
+- [**A delayed success event can fail a healthy task**](https://goingforstudying-ctrl.github.io/notes/airflow-stale-success/) — task state, event ordering, and a regression test with a negative case.
 
-### ⚙️ Distributed systems & infra
+## How I approach a fix
 
-| Project | PR | What it fixes |
-|---|---|---|
-| apache/airflow | [#68741](https://github.com/apache/airflow/pull/68741) | Scheduler race — stale executor `SUCCESS` overwriting a re-queued deferred task |
-| celery/celery | [#10342](https://github.com/celery/celery/pull/10342), [#10366](https://github.com/celery/celery/pull/10366) | Redis `ResultConsumer` memory leak — root-caused twice: original fix, then the regression after a revert |
-| PrefectHQ/prefect | [#22417](https://github.com/PrefectHQ/prefect/pull/22417) | ECS runs stuck `PENDING` when the capacity provider can't place a task |
-| aio-libs/aiohttp | [#12787](https://github.com/aio-libs/aiohttp/pull/12787) | Race in `TCPConnector.close()` — in-flight DNS resolutions now fail cleanly instead of hanging |
-| apache/datafusion-ballista | [#2119](https://github.com/apache/datafusion-ballista/pull/2119) | Retryable IO errors misclassified — transient storage errors killed whole jobs |
-| astronomer/astronomer-cosmos | [#2737](https://github.com/astronomer/astronomer-cosmos/pull/2737) | Warn when users pass output-only template fields that get silently discarded |
-| kubevela/kubevela | [#7162](https://github.com/kubevela/kubevela/pull/7162) | Stable, identifiable `User-Agent` for Helm repo index fetches |
+Reproduce the failure, trace the state or resource ownership, and make the regression test distinguish the broken behavior from the intended one. Keep the patch focused and explain its tradeoffs in the upstream review.
 
----
+## More merged work
 
+<details>
+<summary>AI systems, developer tools, and infrastructure</summary>
 
-*Full list: [all merged PRs →](https://github.com/search?q=author%3Agoingforstudying-ctrl+is%3Apr+is%3Amerged&type=pullrequests&s=created&o=desc)*
+| Area | Selected fixes |
+| :--- | :--- |
+| AI systems | [OGX: close abandoned upstream streams](https://github.com/ogx-ai/ogx/pull/6506) · [Dify: shorten database session lifetimes](https://github.com/langgenius/dify/pull/36903) · [AutoGPT: handle empty provider responses](https://github.com/Significant-Gravitas/AutoGPT/pull/12540) |
+| Developer tools & product | [VS Code: keep toolbar labels on one line](https://github.com/microsoft/vscode/pull/318935) · [Deno: remove a panic path in LSP timing cleanup](https://github.com/denoland/deno/pull/34410) · [Memos: restore standard meta-description previews](https://github.com/usememos/memos/pull/6000) |
+| Distributed systems | [Ballista: classify wrapped retryable I/O errors](https://github.com/apache/datafusion-ballista/pull/2119) · [Celery: clean up retained result messages](https://github.com/celery/celery/pull/10366) · [Prefect: handle ECS task placement failures](https://github.com/PrefectHQ/prefect/pull/22417) |
+
+</details>
+
+<sub>Contribution counts checked against public GitHub PRs on October 11, 2026. Pinned upstream repositories below highlight projects I contribute to.</sub>
