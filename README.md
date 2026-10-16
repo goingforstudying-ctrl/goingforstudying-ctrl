@@ -9,6 +9,12 @@ My open-source work is in **MLE & AI Engineering**: ML framework correctness, LL
 
 **47 merged public PRs across 28 repositories** · [Browse the contributions](https://github.com/search?q=author%3Agoingforstudying-ctrl+is%3Apr+is%3Amerged+is%3Apublic&type=pullrequests&s=updated&o=desc)
 
+## Paid debugging enquiries
+
+Have a reproducible Python backend or AI integration failure? Enquire about a **US$150 diagnostic pilot** for one failing path in one component, capped at **two hours of total work**, including setup, reproduction, investigation, independent review, report and handoff. You receive reproduction evidence or documented attempts, findings and a bounded repair recommendation. The cause may remain inconclusive. A code fix is scoped and quoted separately.
+
+[Email Jason Ji](mailto:contactjensennow@gmail.com) with the expected behaviour, actual failure and dependency versions. Please leave out secrets, private code, logs and customer data. Before work, we agree the scope, acceptance and refund terms, payment, and permitted AI use, including any external processing of code or data.
+
 ## Two more places to start
 
 **The retry skipped the document that failed.** Swiftide wrote its cache entry before embedding and storage finished. A failed document could then be skipped on every retry. Moving the write meant working out when a document was complete, even after chunking and filtered errors. [Read the story](https://goingforstudying-ctrl.github.io/notes/swiftide-indexing-cache/) · [Merged patch](https://github.com/bosun-ai/swiftide/pull/1164)
